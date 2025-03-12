@@ -1,0 +1,229 @@
+/* Основные стили для страницы уроков */
+.lessons-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.lessons-container h1 {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.lesson {
+    margin-bottom: 3rem;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.lesson h2 {
+    font-size: 2rem;
+    color: #ff6f61;
+    margin-bottom: 1rem;
+}
+
+.lesson-content {
+    margin-bottom: 1.5rem;
+}
+
+.lesson-content p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.lesson-content strong {
+    color: #333;
+}
+
+.lesson-content code {
+    background-color: #f4f4f9;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #ff6f61;
+}
+
+.lesson-playground {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.sandbox-content {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    height: 550px;
+}
+
+.code-editor {
+    flex: 1;
+    display: flex;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    height: 100%;
+}
+
+.line-numbers-container {
+    padding-top: 0.13rem;
+    padding-left: 1rem;
+    padding-right: 0.5rem;
+    padding-bottom: 1rem;
+    background-color: #e9e9e9;
+    overflow-y: hidden;
+    height: 100%;
+}
+
+.line-numbers {
+    text-align: right;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+    user-select: none;
+    min-height: 100%;
+}
+
+.code-editor textarea {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    padding-top: 0.23rem;
+    padding-left: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    border: none;
+    background-color: #f9f9f9;
+    resize: none;
+    outline: none;
+    overflow-y: auto;
+}
+
+.output {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    padding: 1rem;
+}
+
+#turtle-canvas {
+    width: 700px;
+    height: 500px;
+    background-color: white;
+    border: 1px solid #ccc;
+}
+
+.error-message {
+    margin-top: 1rem;
+    color: #ff6f61;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.control-button {
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.control-button:hover {
+    background-color: #ff4a3d;
+}
+
+/* Адаптивность для экранов меньше 1200px */
+@media (max-width: 1200px) {
+    .sandbox-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .code-editor {
+        height: 300px;
+    }
+
+    #turtle-canvas {
+        width: 100%;
+        height: 300px;
+    }
+}
+
+/* Адаптивность для экранов меньше 768px */
+@media (max-width: 768px) {
+    .code-editor {
+        height: 250px;
+    }
+
+    #turtle-canvas {
+        height: 250px;
+    }
+
+    .control-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Адаптивность для экранов меньше 480px */
+@media (max-width: 480px) {
+    .code-editor {
+        height: 200px;
+    }
+
+    #turtle-canvas {
+        height: 200px;
+    }
+
+    .control-button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
+
+/* Стили для навигации между уроками */
+.lesson-navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2rem;
+}
+
+.nav-button {
+    background-color: #ff6f61;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #ff9a9e;
+    transform: scale(1.05);
+}
