@@ -3,20 +3,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const lineNumbers = document.getElementById('line-numbers');
     const lineNumbersContainer = document.querySelector('.line-numbers-container');
     const runButton = document.getElementById('run-button');
-    const clearButton = document.getElementById('clear-button'); // Добавляем кнопку "Очистить"
+    const clearButton = document.getElementById('clear-button');
     const canvas = document.getElementById('turtle-canvas');
     const errorMessage = document.getElementById('error-message');
 
-    // Проверка, что элементы существуют
     if (!codeInput || !lineNumbers || !runButton || !canvas || !errorMessage || !clearButton) {
         console.error('Один из элементов не найден в DOM');
         return;
     }
 
-    // Инициализация turtle
     const turtle = new Turtle(canvas);
-
-    // Делаем turtle доступным в глобальной области видимости
     window.turtle = turtle;
 
     // Создаем русскоязычные функции
@@ -26,31 +22,44 @@ document.addEventListener('DOMContentLoaded', function () {
     window.налево = (угол) => turtle.left(угол);
     window.поднять_хвост = () => turtle.penup();
     window.опустить_хвост = () => turtle.pendown();
+    window.точка = (размер, цвет) => turtle.точка(размер, цвет);
+    window.установить_цвет = (цвет) => turtle.установить_цвет(цвет);
 
-    // Хранилище переменных
     const variables = {};
+    const turtleCommands = [
+        'вперёд', 'назад', 'направо', 'налево', 'поднять_хвост',
+        'опустить_хвост', 'точка', 'установить_цвет'
+    ];
 
-    // Список команд черепахи
-    const turtleCommands = ['вперёд', 'назад', 'направо', 'налево', 'поднять_хвост', 'опустить_хвост'];
-
-    // Функция для выполнения кода
     function executeCode(code) {
         try {
-            // Проверяем, является ли строка командой черепахи
+            const forLoopMatch = code.match(/^ДЛЯ\s+([а-яА-Яa-zA-Z_]+)\s+В\s+\[([^,\]]+),\s*([^,\]]+)(?:,\s*([^,\]]+))?\]$/);
+            if (forLoopMatch) {
+                const varName = forLoopMatch[1].trim();
+                const start = evaluateExpression(forLoopMatch[2].trim());
+                const end = evaluateExpression(forLoopMatch[3].trim());
+                const step = forLoopMatch[4] ? evaluateExpression(forLoopMatch[4].trim()) : 1;
+
+                return {
+                    type: 'FOR_LOOP',
+                    varName,
+                    start,
+                    end,
+                    step,
+                };
+            }
+
             const isTurtleCommand = turtleCommands.some(command => code.startsWith(command));
 
             if (isTurtleCommand) {
-                // Разбираем команду на название и аргументы
                 const match = code.match(/^(\D+)\((.*)\)$/);
                 if (match) {
                     const commandName = match[1].trim();
                     const argsString = match[2];
 
-                    // Вычисляем все аргументы с учётом переменных
                     const args = argsString.split(',')
                         .map(arg => evaluateExpression(arg.trim()));
 
-                    // Вызываем команду черепахи с вычисленными аргументами
                     if (typeof window[commandName] === 'function') {
                         window[commandName](...args);
                     } else {
@@ -60,14 +69,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            // Обработка присваивания переменных
             if (code.includes('=')) {
                 const [varName, expression] = code.split('=').map(s => s.trim());
                 variables[varName] = evaluateExpression(expression);
                 return;
             }
 
-            // Выполнение арифметических операций
             const result = evaluateExpression(code);
             if (typeof result !== 'undefined') {
                 console.log(result);
@@ -78,18 +85,75 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Функция для вычисления выражений (обновлённая)
     function evaluateExpression(expression) {
-        // Заменяем русские операторы на JavaScript-эквиваленты
+        // Если это ключевое слово цикла, возвращаем его как есть
+        if (expression === 'ДЛЯ' || expression === 'КОНЕЦДЛЯ') {
+            return expression;
+        }
+
+        if (/^['"].*['"]$/.test(expression)) {
+            const colorName = expression.slice(1, -1);
+            const цвета = {
+                'красный': '#FF0000',
+                'зеленый': '#00FF00',
+                'синий': '#0000FF',
+                'желтый': '#FFFF00',
+                'оранжевый': '#FFA500',
+                'фиолетовый': '#800080',
+                'розовый': '#FFC0CB',
+                'голубой': '#00FFFF',
+                'бирюзовый': '#40E0D0',
+                'салатовый': '#7FFF00',
+                'лавандовый': '#E6E6FA',
+                'коричневый': '#A52A2A',
+                'бежевый': '#F5F5DC',
+                'серый': '#808080',
+                'черный': '#000000',
+                'белый': '#FFFFFF',
+                'золотой': '#FFD700',
+                'серебряный': '#C0C0C0',
+                'бордовый': '#800000',
+                'оливковый': '#808000',
+                'темно-синий': '#000080',
+                'темно-зеленый': '#006400',
+                'светло-голубой': '#ADD8E6',
+                'светло-розовый': '#FFB6C1',
+                'светло-зеленый': '#90EE90',
+                'темно-фиолетовый': '#9400D3',
+                'персиковый': '#FFE5B4',
+                'мятный': '#98FF98',
+                'коралловый': '#FF7F50',
+                'индиго': '#4B0082',
+                'хаки': '#F0E68C',
+                'терракотовый': '#E2725B',
+                'малиновый': '#DC143C',
+                'лаймовый': '#00FF00',
+                'аквамарин': '#7FFFD4',
+                'небесно-голубой': '#87CEEB',
+                'пурпурный': '#800080',
+                'сливовый': '#DDA0DD',
+                'шоколадный': '#D2691E',
+            };
+
+            if (цвета[colorName]) {
+                return цвета[colorName];
+            } else {
+                throw new Error(`Неизвестный цвет: ${colorName}`);
+            }
+        }
+
+        if (/^#[0-9A-Fa-f]{3,6}$/i.test(expression)) {
+            return expression;
+        }
+
         expression = expression
             .replace(/ИЛИ/g, '||')
             .replace(/И/g, '&&')
             .replace(/НЕ/g, '!')
             .replace(/\^/g, '**')
-            .replace(/\+/g, '+') // Убедимся, что пробелы вокруг "+" не мешают
+            .replace(/\+/g, '+')
             .replace(/\-/g, '-');
 
-        // Заменяем переменные на их значения (с учётом сложных имён)
         expression = expression.replace(/([a-zA-Zа-яА-Я_]+)/g, (match) => {
             if (variables.hasOwnProperty(match)) {
                 return variables[match];
@@ -97,16 +161,14 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error(`Переменная ${match} не определена`);
         });
 
-        console.log('Вычисляемое выражение:', expression); // Отладочный вывод
+        console.log('Вычисляемое выражение:', expression);
         return eval(expression);
     }
 
-    // Обновление нумерации строк при загрузке страницы
     updateLineNumbers();
 
     runButton.addEventListener('click', function () {
-        console.log('Кнопка "Запустить" нажата'); // Отладочный вывод
-        // Очистка предыдущего результата
+        console.log('Кнопка "Запустить" нажата');
         turtle.reset();
         errorMessage.textContent = '';
 
@@ -116,64 +178,103 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            // Получаем код из текстового поля
             const code = codeInput.value;
+            const lines = code.split('\n').filter(line => line.trim() !== ''); // Удаляем пустые строки
+            const loopStack = [];
+            let i = 0;
 
-            // Разбиваем код на строки
-            const lines = code.split('\n');
+            function processLine() {
+                if (i >= lines.length) return;
 
-            // Выполняем код построчно
-            lines.forEach(line => {
-                if (line.trim()) {
-                    executeCode(line.trim());
+                const line = lines[i].trim();
+                i++;
+
+                // Обработка начала цикла
+                const forLoopMatch = line.match(/^ДЛЯ\s+([а-яА-Яa-zA-Z_]+)\s+В\s+\[([^,\]]+),\s*([^,\]]+)(?:,\s*([^,\]]+))?\]$/);
+                if (forLoopMatch) {
+                    const varName = forLoopMatch[1].trim();
+                    const start = evaluateExpression(forLoopMatch[2].trim());
+                    const end = evaluateExpression(forLoopMatch[3].trim());
+                    const step = forLoopMatch[4] ? evaluateExpression(forLoopMatch[4].trim()) : 1;
+
+                    variables[varName] = start;
+                    loopStack.push({
+                        varName,
+                        start,
+                        end,
+                        step,
+                        loopStartIndex: i // Индекс следующей строки после ДЛЯ
+                    });
+
+                    processLine();
+                    return;
                 }
-            });
+
+                // Обработка конца цикла
+                if (line === 'КОНЕЦДЛЯ') {
+                    if (loopStack.length === 0) throw new Error('Неожиданный КОНЕЦДЛЯ');
+
+                    const currentLoop = loopStack[loopStack.length - 1];
+                    variables[currentLoop.varName] += currentLoop.step;
+
+                    // Проверяем условие продолжения
+                    if (
+                        (currentLoop.step > 0 && variables[currentLoop.varName] <= currentLoop.end) ||
+                        (currentLoop.step < 0 && variables[currentLoop.varName] >= currentLoop.end)
+                    ) {
+                        i = currentLoop.loopStartIndex; // Возвращаемся к телу цикла
+                    } else {
+                        loopStack.pop(); // Выходим из цикла
+                    }
+
+                    processLine();
+                    return;
+                }
+
+                // Выполнение обычной команды
+                executeCode(line);
+                processLine(); // Рекурсивный вызов для синхронного выполнения
+            }
+
+            processLine();
         } catch (error) {
-            // Отображение ошибки
             errorMessage.textContent = `Ошибка: ${error.message}`;
             console.error(error);
         }
     });
 
-    // Обработчик для кнопки "Очистить"
     clearButton.addEventListener('click', function () {
-        // Очищаем текстовое поле
         codeInput.value = '';
-        // Сбрасываем состояние черепахи
         turtle.reset();
-        // Очищаем сообщение об ошибке
         errorMessage.textContent = '';
-        // Обновляем нумерацию строк
         updateLineNumbers();
     });
 
-    // Функция для обновления нумерации строк
     function updateLineNumbers() {
         const lines = codeInput.value.split('\n').length;
         lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
     }
 
-    // Синхронизация прокрутки
     function syncScroll() {
         lineNumbersContainer.scrollTop = codeInput.scrollTop;
     }
 
     codeInput.addEventListener('input', updateLineNumbers);
     codeInput.addEventListener('scroll', syncScroll);
-    codeInput.addEventListener('keydown', syncScroll); // Обработка клавиш
+    codeInput.addEventListener('keydown', syncScroll);
     updateLineNumbers();
 });
 
-// Класс для имитации turtle
 class Turtle {
     constructor(canvas) {
-        console.log('Инициализация Turtle'); // Отладочный вывод
+        console.log('Инициализация Turtle');
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.x = canvas.width / 2;
         this.y = canvas.height / 2;
         this.angle = 0;
         this.penDown = true;
+        this.color = '#000000';
         this.reset();
     }
 
@@ -183,6 +284,7 @@ class Turtle {
         this.y = this.canvas.height / 2;
         this.angle = 0;
         this.penDown = true;
+        this.color = '#000000';
     }
 
     forward(distance) {
@@ -192,6 +294,7 @@ class Turtle {
             this.ctx.beginPath();
             this.ctx.moveTo(this.x, this.y);
             this.ctx.lineTo(newX, newY);
+            this.ctx.strokeStyle = this.color;
             this.ctx.stroke();
         }
         this.x = newX;
@@ -216,5 +319,28 @@ class Turtle {
 
     pendown() {
         this.penDown = true;
+    }
+
+    точка(размер, цвет) {
+        const originalColor = this.color;
+
+        if (цвет) {
+            this.установить_цвет(цвет);
+        }
+
+        this.ctx.beginPath();
+        this.ctx.arc(this.x, this.y, размер / 2, 0, Math.PI * 2);
+        this.ctx.fillStyle = this.color;
+        this.ctx.fill();
+
+        this.color = originalColor;
+        this.ctx.strokeStyle = originalColor;
+        this.ctx.fillStyle = originalColor;
+    }
+
+    установить_цвет(цвет) {
+        this.color = цвет;
+        this.ctx.strokeStyle = this.color;
+        this.ctx.fillStyle = this.color;
     }
 }
