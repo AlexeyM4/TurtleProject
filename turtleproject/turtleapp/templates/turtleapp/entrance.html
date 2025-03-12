@@ -1,0 +1,33 @@
+{% extends 'turtleapp/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>Профиль</title>
+    <link href="{% static 'turtleapp/css/entrance.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+    <h1>Профиль</h1>
+
+    <div class="auth-section">
+        <form class="auth-form" method="post" action="{% url 'user_login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="auth-button">Войти</button>
+            <button class="auth-button" onclick="window.location.href='{% url 'register' %}'">Зарегистрироваться</button>
+        </form>
+    </div>
+
+    <div class="forgot-password">
+        <a href="{% url 'password_reset' %}">Забыли пароль?</a>
+    </div>
+</div>
+{% endblock %}

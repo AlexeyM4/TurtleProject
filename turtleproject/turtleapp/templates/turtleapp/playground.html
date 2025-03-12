@@ -1,0 +1,42 @@
+{% extends 'turtleapp/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>Песочница</title>
+    <link href="{% static 'turtleapp/css/playground.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="sandbox-container">
+        <h1>Песочница</h1>
+
+        <!-- Контейнер для редактора кода и результата -->
+        <div class="sandbox-content">
+            <!-- Поле для ввода кода -->
+            <div class="code-editor">
+                <div class="line-numbers-container"> <!-- Добавляем контейнер для прокрутки -->
+                    <div class="line-numbers" id="line-numbers"></div>
+                </div>
+                <textarea id="code-input" placeholder="Введите ваш код..." spellcheck="false"></textarea>
+            </div>
+
+            <!-- Поле для отображения результата -->
+            <div class="output">
+                <canvas id="turtle-canvas" width="700" height="500"></canvas>
+                <div id="error-message" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Кнопки управления -->
+        <div class="controls">
+            <button id="run-button" class="control-button">Запустить</button>
+            <button id="clear-button" class="control-button">Очистить</button>
+            <button id="save-button" class="control-button">Сохранить</button>
+        </div>
+    </div>
+
+    <script src="{% static 'turtleapp/js/playground.js' %}"></script>
+{% endblock %}
+
+
+
