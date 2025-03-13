@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import News, Works, Lessons
 
-# Register your models here.
+admin.site.register(News)
+admin.site.register(Works)
+admin.site.register(Lessons)
+

@@ -1,0 +1,217 @@
+/* Основные стили для страницы "Работы" */
+.works-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Заголовок "Работы" */
+.works-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* Форма фильтрации и сортировки */
+.filters-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-group label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.filter-group input, .filter-group select {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    min-width: 200px;
+    outline: none; /* Убираем синее выделение */
+}
+
+.filter-group input:focus, .filter-group select:focus {
+    border-color: #ff6f61; /* Подсветка при фокусе */
+    box-shadow: 0 0 5px rgba(255, 111, 97, 0.5);
+}
+
+/* Кастомный стиль для выпадающих списков */
+.filter-group select {
+    appearance: none; /* Убираем стандартный стиль */
+    background-color: white;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23ff6f61%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 12px;
+    padding-right: 2.5rem;
+}
+
+.filter-button {
+    padding: 0.75rem 1.5rem;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+    background-color: #e65a50;
+}
+
+/* Список работ */
+.works-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Две карточки в ряд */
+    gap: 1.5rem;
+}
+
+.work-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.work-card:hover {
+    transform: translateY(-5px);
+}
+
+.work-image {
+    width: 100%;
+    height: 200px; /* Увеличиваем высоту изображения */
+    object-fit: cover;
+}
+
+.work-details {
+    padding: 1.5rem;
+}
+
+.work-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.work-author, .work-time {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+}
+
+.work-stats {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.likes-count, .comments-count {
+    font-size: 1rem;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Стили для пагинации */
+.pagination {
+    display: flex;
+    justify-content: space-between; /* Распределяем элементы по ширине */
+    align-items: center;
+    margin-top: 2rem;
+    padding: 0 1rem;
+}
+
+.pagination .step-links {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Занимаем всю ширину контейнера */
+    justify-content: space-between; /* Распределяем элементы по ширине */
+}
+
+.pagination .current {
+    padding: 1rem 2rem;
+    background-color: #f4f4f9;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: bold;
+    margin: 0 auto; /* Центрируем текущую страницу */
+}
+
+.pagination-button {
+    padding: 1rem 2rem;
+    background-color: #ff6f61;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.pagination-button:hover {
+    background-color: #e65a50;
+}
+
+/* Скрываем кнопки, если они не нужны */
+.pagination-button[disabled] {
+    display: none;
+}
+
+.pagination-placeholder {
+    padding: 1rem 2rem;
+    background-color: transparent;
+    border: 2px solid #ff6f61;
+    color: #ff6f61;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .filters-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group input, .filter-group select {
+        width: 100%;
+    }
+
+    .filter-button {
+        width: 100%;
+    }
+
+    .works-list {
+        grid-template-columns: 1fr; /* Одна карточка в ряд на мобильных устройствах */
+    }
+}

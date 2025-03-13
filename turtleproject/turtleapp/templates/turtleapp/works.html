@@ -1,0 +1,91 @@
+{% extends 'turtleapp/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>Работы</title>
+    <link href="{% static 'turtleapp/css/works.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="works-container">
+        <h1 class="works-title">Работы</h1>
+
+        <!-- Форма для фильтрации и сортировки -->
+        <form method="get" class="filters-form">
+            <div class="filter-group">
+                <label for="author">Автор:</label>
+                <input type="text" name="author" id="author" value="{{ request.GET.author }}" placeholder="Введите автора">
+            </div>
+            <div class="filter-group">
+                <label for="title">Название:</label>
+                <input type="text" name="title" id="title" value="{{ request.GET.title }}" placeholder="Введите название">
+            </div>
+            <div class="filter-group">
+                <label for="sort_by">Сортировать по:</label>
+                <select name="sort_by" id="sort_by">
+                    <option value="">-- Выберите --</option>
+                    <option value="likes" {% if request.GET.sort_by == 'likes' %}selected{% endif %}>Лайкам</option>
+                    <option value="comments" {% if request.GET.sort_by == 'comments' %}selected{% endif %}>Комментариям</option>
+                    <option value="datetime" {% if request.GET.sort_by == 'datetime' %}selected{% endif %}>Дате и времени</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sort_order">Направление сортировки:</label>
+                <select name="sort_order" id="sort_order">
+                    <option value="desc" {% if request.GET.sort_order == 'desc' %}selected{% endif %}>От большего к меньшему</option>
+                    <option value="asc" {% if request.GET.sort_order == 'asc' %}selected{% endif %}>От меньшего к большему</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="per_page">Работ на странице:</label>
+                <select name="per_page" id="per_page">
+                    <option value="10" {% if request.GET.per_page == '10' %}selected{% endif %}>10</option>
+                    <option value="50" {% if request.GET.per_page == '50' %}selected{% endif %}>50</option>
+                    <option value="100" {% if request.GET.per_page == '100' %}selected{% endif %}>100</option>
+                    <option value="500" {% if request.GET.per_page == '500' %}selected{% endif %}>500</option>
+                    <option value="1000" {% if request.GET.per_page == '1000' %}selected{% endif %}>1000</option>
+                </select>
+            </div>
+            <button type="submit" class="filter-button">Применить</button>
+        </form>
+
+        <!-- Список работ -->
+        <div class="works-list">
+            {% for work in page_obj %}
+                <div class="work-card">
+                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
+                    <div class="work-details">
+                        <p class="work-title">{{ work.title }}</p>
+                        <p class="work-author">Автор: {{ work.author }}</p>
+                        <p class="work-time">{{ work.datetime }}</p>
+                        <div class="work-stats">
+                            <span class="likes-count">❤️ {{ work.likes }}</span>
+                            <span class="comments-count">💬 {{ work.comments }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&author={{ request.GET.author }}&title={{ request.GET.title }}&sort_by={{ request.GET.sort_by }}&sort_order={{ request.GET.sort_order }}&per_page={{ request.GET.per_page }}" class="pagination-button">Назад</a>
+                {% else %}
+                    <span class="pagination-placeholder">Назад</span>
+                {% endif %}
+
+                <span class="current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&author={{ request.GET.author }}&title={{ request.GET.title }}&sort_by={{ request.GET.sort_by }}&sort_order={{ request.GET.sort_order }}&per_page={{ request.GET.per_page }}" class="pagination-button">Вперёд</a>
+                {% else %}
+                    <span class="pagination-placeholder">Вперёд</span>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock %}

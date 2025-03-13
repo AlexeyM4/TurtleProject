@@ -10,7 +10,7 @@ body {
 /* Стили для навигационной панели */
 .navbar {
     background-color: #ff6f61; /* Яркий коралловый цвет */
-    padding: 1rem 2rem;
+    padding: 1.5rem 2rem; /* Увеличиваем отступы */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -26,17 +26,17 @@ body {
 
 /* Стили для элементов списка */
 .nav-item {
-    margin-right: 1.5rem;
+    margin-right: 2rem; /* Увеличиваем отступ между элементами */
 }
 
 /* Стили для ссылок */
 .nav-link {
     text-decoration: none;
     color: white;
-    font-size: 1.1rem;
+    font-size: 1.3rem; /* Увеличиваем размер шрифта */
     font-weight: 500;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
+    padding: 0.75rem 1.5rem; /* Увеличиваем отступы внутри ссылок */
+    border-radius: 6px; /* Увеличиваем скругление углов */
     transition: all 0.3s ease;
     position: relative;
 }
@@ -52,4 +52,3 @@ body {
     background-color: rgba(255, 255, 255, 0.3);
     font-weight: bold;
 }
-

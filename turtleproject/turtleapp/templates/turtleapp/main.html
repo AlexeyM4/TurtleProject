@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block params %}
-    <title>Главная | Kturtle</title>
+    <title>Главная</title>
     <link href="{% static 'turtleapp/css/main.css' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
@@ -17,141 +17,35 @@
         <div class="news-section">
             <h2>Новости</h2>
             <div class="news-list">
-                <!-- Пример новости -->
-                <div class="news-item">
-                    <h3>Новый урок: "Циклы в Kturtle"</h3>
-                    <p>Мы добавили новый урок, посвящённый циклам. Узнайте, как использовать циклы для создания сложных фигур!</p>
-                    <span class="news-date">12 октября 2023</span>
-                </div>
-                <div class="news-item">
-                    <h3>Новый урок: "Циклы в Kturtle"</h3>
-                    <p>Мы добавили новый урок, посвящённый циклам. Узнайте, как использовать циклы для создания сложных фигур!</p>
-                    <span class="news-date">12 октября 2023</span>
-                </div>
-                <div class="news-item">
-                    <h3>Новый урок: "Циклы в Kturtle"</h3>
-                    <p>Мы добавили новый урок, посвящённый циклам. Узнайте, как использовать циклы для создания сложных фигур!</p>
-                    <span class="news-date">12 октября 2023</span>
-                </div>
-                <!-- Новости будут добавляться админом -->
+                {% for new in news %}
+                    <div class="news-item">
+                        <h3>{{ new.title }}</h3>
+                        <p>{{ new.text }}</p>
+                        <span class="news-date">{{ new.date }}</span>
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
         <div class="popular-works-section">
             <h2>ТОП-10 работ</h2>
+
             <div class="works-grid">
-                <!-- Пример работы -->
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
+                {% for work in works %}
+                    <div class="work-card">
+                        <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
+                        <div class="work-details">
+                            <p class="work-title">{{ work.title }}</p>
+                            <p class="work-author">Автор: {{ work.author }}</p>
+                            <p class="work-time">{{ work.datetime }}</p>
+                            <div class="work-stats">
+                                <span class="likes-count">❤️ {{ work.likes }}</span>
+                                <span class="comments-count">💬 {{ work.comments }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Добавьте ещё карточек -->
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="work-card">
-                    <img src="{% static 'turtleapp/images/example1.png' %}" alt="Пример работы" class="work-image">
-                    <div class="work-details">
-                        <p class="work-author">Автор: User123</p>
-                        <p class="work-time">2 часа назад</p>
-                        <div class="work-stats">
-                            <span class="likes-count">❤️ 45</span>
-                            <span class="comments-count">💬 12</span>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
+
             </div>
         </div>
     </div>

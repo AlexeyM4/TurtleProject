@@ -16,6 +16,10 @@
                    class="nav-link {% if request.path == '/' %}active{% endif %}">Главная</a>
             </li>
             <li class="nav-item">
+                <a href="{% url 'works' %}"
+                   class="nav-link {% if request.path == '/works' %}active{% endif %}">Работы</a>
+            </li>
+            <li class="nav-item">
                 <a href="{% url 'lessons' %}"
                    class="nav-link {% if request.path == '/lessons' %}active{% endif %}">Уроки</a>
             </li>
