@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'turtleapp/css/nav_bar.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'main/css/nav_bar.css' %}" rel="stylesheet" type="text/css"/>
     {% block params %}
     {% endblock %}
 </head>
@@ -17,7 +17,7 @@
             </li>
             <li class="nav-item">
                 <a href="{% url 'works' %}"
-                   class="nav-link {% if request.path == '/works' %}active{% endif %}">Работы</a>
+                   class="nav-link {% if request.path == '/works/' %}active{% endif %}">Работы</a>
             </li>
             <li class="nav-item">
                 <a href="{% url 'lessons' %}"
@@ -25,11 +25,16 @@
             </li>
             <li class="nav-item">
                 <a href="{% url 'playground' %}"
-                   class="nav-link {% if request.path == '/playground' %}active{% endif %}">Песочница</a>
+                   class="nav-link {% if request.path == '/turtleapp/playground' %}active{% endif %}">Песочница</a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'entrance' %}"
-                   class="nav-link {% if request.path == '/entrance' %}active{% endif %}">Профиль</a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'profile' %}"
+                       class="nav-link {% if request.path == '/users/profile' %}active{% endif %}">Профиль</a>
+                {% else %}
+                    <a href="{% url 'entrance' %}"
+                       class="nav-link {% if request.path == '/users/entrance' %}active{% endif %}">Профиль</a>
+                {% endif %}
             </li>
         </ul>
     </nav>

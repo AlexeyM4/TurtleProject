@@ -86,15 +86,19 @@
 }
 
 .work-card {
+    display: block; /* Изменяем на block для корректного отображения ссылки */
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     overflow: hidden;
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    color: inherit; /* Наследуем цвет текста */
 }
 
 .work-card:hover {
     transform: translateY(-5px);
+    text-decoration: none; /* Убираем подчеркивание при наведении */
 }
 
 .work-image {
@@ -180,6 +184,8 @@
     display: none;
 }
 
+
+
 .pagination-placeholder {
     padding: 1rem 2rem;
     background-color: transparent;
@@ -189,6 +195,79 @@
     font-size: 1.2rem;
     font-weight: bold;
 
+}
+
+.work-stats {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Уменьшаем расстояние между элементами */
+}
+
+.like-icon {
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease;
+    width: 1.2rem; /* Фиксированная ширина */
+    height: 1.2rem; /* Фиксированная высота */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.like-icon.liked {
+    color: #ff6f61; /* Красный цвет для активного лайка */
+}
+
+.likes-count, .comments-count {
+    font-size: 1rem;
+    color: #888;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-register-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #ff6f61;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.modal-register-btn:hover {
+    background-color: #e65a50;
 }
 
 /* Адаптивность */

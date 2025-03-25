@@ -1,0 +1,138 @@
+{% extends 'main/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>Профиль</title>
+    <link href="{% static 'users/css/profile.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'works/js/likes.js' %}"></script>
+
+    <script>
+        function openProfileMenu() {
+            document.getElementById('profileMenuModal').style.display = 'flex';
+        }
+
+        function closeProfileMenu() {
+            document.getElementById('profileMenuModal').style.display = 'none';
+        }
+
+        // Закрытие модального окна при клике вне его области
+        window.onclick = function(event) {
+            const modal = document.getElementById('profileMenuModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-info">
+                <h1>
+                    <span class="name">{{ user.first_name }} {{ user.last_name }}</span>
+                    <button class="profile-menu-button" onclick="openProfileMenu()">⋮</button>
+                </h1>
+                <p class="username">{{ user.username }}</p>
+            </div>
+        </div>
+
+        <!-- Модальное окно -->
+        <div id="profileMenuModal" class="modal">
+            <div class="modal-content">
+                <h2>Информация о пользователе</h2>
+                <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+                <p><strong>Имя:</strong> {{ user.first_name }}</p>
+                <p><strong>Фамилия:</strong> {{ user.last_name }}</p>
+                <p><strong>E-mail:</strong> {{ user.email }}</p>
+                <a href="{% url 'logout' %}" class="logout-button">Выйти</a>
+                <button class="close-button" onclick="closeProfileMenu()">Закрыть</button>
+            </div>
+        </div>
+
+        <!-- Достижения (пока пусто) -->
+        <div class="achievements-section">
+            <h2>Достижения</h2>
+            <p>Здесь скоро появятся ваши достижения!</p>
+        </div>
+
+        <!-- Форма для фильтрации и сортировки -->
+        <form method="get" class="filters-form">
+            <div class="filter-group">
+                <label for="title">Название:</label>
+                <input type="text" name="title" id="title" value="{{ request.GET.title }}" placeholder="Введите название">
+            </div>
+            <div class="filter-group">
+                <label for="sort_by">Сортировать по:</label>
+                <select name="sort_by" id="sort_by">
+                    <option value="">-- Выберите --</option>
+                    <option value="likes" {% if request.GET.sort_by == 'likes' %}selected{% endif %}>Лайкам</option>
+                    <option value="comments" {% if request.GET.sort_by == 'comments' %}selected{% endif %}>Комментариям</option>
+                    <option value="datetime" {% if request.GET.sort_by == 'datetime' %}selected{% endif %}>Дате и времени</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sort_order">Направление сортировки:</label>
+                <select name="sort_order" id="sort_order">
+                    <option value="desc" {% if request.GET.sort_order == 'desc' %}selected{% endif %}>От большего к меньшему</option>
+                    <option value="asc" {% if request.GET.sort_order == 'asc' %}selected{% endif %}>От меньшего к большему</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="per_page">Работ на странице:</label>
+                <select name="per_page" id="per_page">
+                    <option value="8" {% if request.GET.per_page == '8' %}selected{% endif %}>8</option>
+                    <option value="16" {% if request.GET.per_page == '16' %}selected{% endif %}>16</option>
+                    <option value="40" {% if request.GET.per_page == '40' %}selected{% endif %}>40</option>
+                </select>
+            </div>
+            <button type="submit" class="filter-button">Применить</button>
+        </form>
+
+        <!-- Список работ -->
+        <div class="works-grid">
+            {% for work in page_obj %}
+                <div class="work-card">
+                    <a href="{% url 'work_detail' work.id %}" data-work-id="{{ work.id }}">
+                        <img src="{{ work.image.url }}" alt="{{ work.title }}" class="work-image">
+                    </a>
+                        <div class="work-details">
+                            <p class="work-title">{{ work.title }}</p>
+                            <p class="work-time">{{ work.datetime }}</p>
+                            <div class="work-stats">
+                                <span class="like-icon {% if work.user_has_liked %}liked{% endif %}"
+                                      data-work-id="{{ work.id }}"
+                                      {% if not request.user.is_authenticated %}data-unauth="true"{% endif %}>
+                                      {% if work.user_has_liked %}❤️{% else %}🤍{% endif %}
+                                </span>
+                                <span class="likes-count" data-work-id="{{ work.id }}">{{ work.likes }}</span>
+                                <span class="comments-count">💬 {{ work.comments_count }}</span>
+                            </div>
+                        </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Пагинация -->
+        <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}&title={{ request.GET.title }}&sort_by={{ request.GET.sort_by }}&sort_order={{ request.GET.sort_order }}&per_page={{ request.GET.per_page }}" class="pagination-button">Назад</a>
+                {% else %}
+                    <span class="pagination-placeholder">Назад</span>
+                {% endif %}
+
+                <span class="current">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}&title={{ request.GET.title }}&sort_by={{ request.GET.sort_by }}&sort_order={{ request.GET.sort_order }}&per_page={{ request.GET.per_page }}" class="pagination-button">Вперёд</a>
+                {% else %}
+                    <span class="pagination-placeholder">Вперёд</span>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+{% endblock %}

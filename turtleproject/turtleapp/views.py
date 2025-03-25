@@ -1,85 +1,53 @@
-from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
-from django.http import HttpResponse
-from .models import News, Works
+from django.shortcuts import render, get_object_or_404
+from main.models import Lessons, LessonProgress
+
+from django.http import JsonResponse
+
+from django.utils import timezone
 
 
-def main_page(request):
-    data = {
-        'news': News.objects.order_by('-date'),
-        'works': Works.objects.order_by('-likes')[:10],
-    }
-    return render(request, 'turtleapp/main.html', data)
 
-def works(request):
-    works = Works.objects.all()
+from django.views.decorators.csrf import csrf_exempt
 
-    # Фильтрация
-    author = request.GET.get('author')
-    if author:
-        works = works.filter(author__icontains=author)
 
-    title = request.GET.get('title')
-    if title:
-        works = works.filter(title__icontains=title)
+@csrf_exempt
+def lesson_detail(request, lesson_order):
+    lesson = get_object_or_404(Lessons, order=lesson_order)
 
-    # Сортировка
-    sort_by = request.GET.get('sort_by')
-    sort_order = request.GET.get('sort_order', 'desc')  # По умолчанию сортировка по убыванию
+    # Получаем соседние уроки
+    previous_lesson = Lessons.objects.filter(order__lt=lesson.order).order_by('-order').first()
+    next_lesson = Lessons.objects.filter(order__gt=lesson.order).order_by('order').first()
 
-    if sort_by == 'likes':
-        works = works.order_by(f'-{sort_by}' if sort_order == 'desc' else sort_by)
-    elif sort_by == 'comments':
-        works = works.order_by(f'-{sort_by}' if sort_order == 'desc' else sort_by)
-    elif sort_by == 'datetime':
-        works = works.order_by(f'-{sort_by}' if sort_order == 'desc' else sort_by)
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            # Создаем или обновляем запись о прогрессе
+            progress, created = LessonProgress.objects.update_or_create(
+                user=request.user,
+                lesson=lesson,
+                defaults={'completed': True, 'completed_at': timezone.now()}
+            )
+            return JsonResponse({'status': 'success', 'completed': True})
+        else:
+            return JsonResponse({'status': 'auth_required'}, status=403)
 
-    # Количество работ на странице
-    per_page = request.GET.get('per_page', '10')
-    if not per_page:
-        per_page = 10
-    else:
-        per_page = int(per_page)
+    # Проверяем статус прохождения для авторизованных
+    is_completed = False
+    if request.user.is_authenticated:
+        is_completed = LessonProgress.objects.filter(
+            user=request.user,
+            lesson=lesson,
+            completed=True
+        ).exists()
 
-    paginator = Paginator(works, per_page)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    return render(request, 'turtleapp/lesson_detail.html', {
+        'lesson': lesson,
+        'previous_lesson': previous_lesson,
+        'next_lesson': next_lesson,
+        'is_completed': is_completed,
+    })
 
-    context = {
-        'page_obj': page_obj,
-        'per_page': per_page,
-    }
-    return render(request, 'turtleapp/works.html', context)
-
-def lessons(request):
-    return render(request, 'turtleapp/lessons.html')
 
 def playground(request):
     return render(request, 'turtleapp/playground.html')
-
-def entrance(request):
-    return render(request, 'turtleapp/entrance.html')
-
-def register(request):
-    # Логика регистрации
-    return HttpResponse('<h1>Регистрация</h1>')
-
-def user_login(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-
-        return render(request, 'turtleapp/main.html')
-
-        # user = authenticate(request, username=email, password=password)
-        # if user:
-        #     login(request, user)
-        #     return redirect('main')
-    return render(request, 'turtleapp/main.html')
-
-def password_reset(request):
-    return HttpResponse('<h1>Восстановление пароля</h1>')
-
-
 
 

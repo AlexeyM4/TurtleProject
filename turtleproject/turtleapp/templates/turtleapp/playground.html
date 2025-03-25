@@ -1,9 +1,12 @@
-{% extends 'turtleapp/nav_bar.html' %}
+{% extends 'main/nav_bar.html' %}
 {% load static %}
 
 {% block params %}
     <title>Песочница</title>
     <link href="{% static 'turtleapp/css/playground.css' %}" rel="stylesheet" type="text/css"/>
+
+    <script src="{% static 'works/js/save_button.js' %}"></script>
+    <script src="{% static 'turtleapp/js/playground.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -34,8 +37,27 @@
             <button id="save-button" class="control-button">Сохранить</button>
         </div>
     </div>
-
-    <script src="{% static 'turtleapp/js/playground.js' %}"></script>
+    <!-- Модальное окно -->
+    <div id="save-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="auth-message" class="auth-message">
+                <p>Зарегистрированные пользователи могут сохранять работы в своём профиле.</p>
+                <a href="{% url 'entrance' %}" class="control-button">Войти</a>
+                <a href="{% url 'registration' %}" class="control-button">Зарегистрироваться</a>
+                <!-- Разделитель -->
+                <div class="divider">ИЛИ</div>
+                <!-- Кнопка скачивания -->
+                <button id="download-button" class="control-button">Скачать изображение</button>
+            </div>
+            <div id="save-form" class="save-form">
+                <label for="work-title">Название работы:</label>
+                <input type="text" id="work-title" name="work-title" placeholder="Введите название" required>
+                <div id="title-error" class="error-text">Название не может быть пустым или состоять только из пробелов</div>
+                <button id="confirm-save" class="control-button">Сохранить</button>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 

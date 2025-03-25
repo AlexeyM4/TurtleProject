@@ -1,0 +1,70 @@
+{% extends 'main/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>Главная</title>
+    <link href="{% static 'main/css/main.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'users/css/login_or_registration.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static 'works/js/likes.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="hero-section">
+        <h1 class="hero-title">Kturtle</h1>
+        <p class="hero-subtitle">Изучай программирование с черепашкой!</p>
+        <a href="{% url 'lessons' %}" class="hero-button">Начать изучение</a>
+    </div>
+
+    <div class="content-section">
+        <div class="news-section">
+            <h2>Новости</h2>
+            <div class="news-list">
+                {% for new in news %}
+                    <div class="news-item">
+                        <h3>{{ new.title }}</h3>
+                        <p>{{ new.text }}</p>
+                        <span class="news-date">{{ new.date }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="popular-works-section">
+            <h2>ТОП-10 работ</h2>
+
+            <div class="works-grid">
+                {% for work in works %}
+                    <div class="work-card" data-work-id="{{ work.id }}">
+                        <a href="{% url 'work_detail' work.id %}" data-work-id="{{ work.id }}">
+                            <img src="{{ work.image.url }}" alt="{{ work.title }}" class="work-image">
+                        </a>
+                            <div class="work-details">
+                                <p class="work-title">{{ work.title }}</p>
+                                <p class="work-author">Автор: {{ work.author }}</p>
+                                <p class="work-time">{{ work.datetime }}</p>
+
+                                <div class="work-stats">
+                                    <span class="like-icon {% if work.user_has_liked %}liked{% endif %}"
+                                          data-work-id="{{ work.id }}"
+                                          {% if not request.user.is_authenticated %}data-unauth="true"{% endif %}>
+                                          {% if work.user_has_liked %}❤️{% else %}🤍{% endif %}
+                                    </span>
+                                    <span class="likes-count" data-work-id="{{ work.id }}">{{ work.likes }}</span>
+                                    <span class="comments-count">💬 {{ work.comments_count }}</span>
+                                </div>
+                            </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для авторизации -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <p>Ставить лайки и комментировать могут только зарегистрированные пользователи.</p>
+            <a href="{% url 'entrance' %}" class="modal-register-btn">Войти</a>
+            <a href="{% url 'register' %}" class="modal-register-btn">Зарегистрироваться</a>
+        </div>
+    </div>
+{% endblock %}

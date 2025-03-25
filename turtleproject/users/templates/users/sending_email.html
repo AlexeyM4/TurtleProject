@@ -1,0 +1,18 @@
+{% extends 'main/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>Подтверждение регистрации</title>
+    <link href="{% static 'users/css/sending_email.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="registration-done-container">
+        <div class="registration-done-card">
+            <img src="{% static 'users/images/email_icon.png' %}" alt="Email Icon" class="email-icon">
+            <h1>Письмо отправлено!</h1>
+            <p>Мы отправили письмо с инструкциями на вашу почту. Пожалуйста, проверьте её, чтобы завершить {{ aim }}.</p>
+            <p>Если письмо не пришло, проверьте папку "Спам".</p>
+        </div>
+    </div>
+{% endblock %}

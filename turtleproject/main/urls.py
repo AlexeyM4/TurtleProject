@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 urlpatterns = [
-    path('lessons/<int:lesson_order>/', views.lesson_detail, name='lesson_detail'),
-    path('playground', views.playground, name='playground'),
+    path('', views.main_page, name='main'),
+    path('lessons', views.lessons, name='lessons'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

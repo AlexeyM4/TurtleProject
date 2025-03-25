@@ -1,0 +1,74 @@
+{% extends 'main/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>{{ lesson.title }} | Kturtle</title>
+    <link href="{% static 'turtleapp/css/lesson_detail.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'users/css/login_or_registration.css' %}" rel="stylesheet" type="text/css"/>
+
+    <script src="{% static 'turtleapp/js/playground.js' %}"></script>
+    <script src="{% static 'turtleapp/js/check_button.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="lessons-container">
+        <h1>Урок {{ lesson.order }}: {{ lesson.title }}</h1>
+
+        <div class="lesson">
+            <div class="lesson-content">
+                <p>{{ lesson.description|safe }}</p>
+                <p>{{ lesson.theory|safe }}</p>
+                <p>{{ lesson.task|safe }}</p>
+            </div>
+
+            <!-- Песочница -->
+            <div class="lesson-playground">
+                <div class="sandbox-content">
+                    <div class="code-editor">
+                        <div class="line-numbers-container">
+                            <div class="line-numbers" id="line-numbers"></div>
+                        </div>
+                        <textarea id="code-input" placeholder="Введите ваш код..." spellcheck="false"></textarea>
+                    </div>
+
+                    <div class="output">
+                        <canvas id="turtle-canvas" width="700" height="500"></canvas>
+                        <div id="error-message" class="error-message"></div>
+                    </div>
+                </div>
+
+                <!-- Кнопки управления -->
+                <div class="controls">
+                    <button id="run-button" class="control-button">Запустить</button>
+                    <button id="clear-button" class="control-button">Очистить</button>
+                    <button id="check-button" class="control-button">Проверить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно для авторизации -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <p>Чтобы сохранить прогресс, войдите или зарегистрируйтесь</p>
+                <a href="{% url 'entrance' %}" class="modal-register-btn">Войти</a>
+                <a href="{% url 'register' %}" class="modal-register-btn">Зарегистрироваться</a>
+            </div>
+        </div>
+
+        <!-- Навигация между уроками -->
+        <div class="lesson-navigation">
+            {% if previous_lesson %}
+                <a href="{% url 'lesson_detail' previous_lesson.order %}" class="nav-button">← Предыдущий урок</a>
+            {% else %}
+                <span class="nav-button disabled">← Предыдущий урок</span>
+            {% endif %}
+
+            {% if next_lesson %}
+                <a href="{% url 'lesson_detail' next_lesson.order %}" class="nav-button">Следующий урок →</a>
+            {% else %}
+                <span class="nav-button disabled">Следующий урок →</span>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+/* Основной контейнер */
+.registration-done-container {
+    display: flex;
+    justify-content: center;
+    background-color: #f5f5f5; /* Светлый фон */
+    padding: 20px;
+}
+
+/* Карточка с сообщением */
+.registration-done-card {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Иконка письма */
+.email-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+}
+
+/* Заголовок */
+.registration-done-card h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Текст */
+.registration-done-card p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+/* Ссылка на проверку спама */
+.registration-done-card a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.registration-done-card a:hover {
+    text-decoration: underline;
+}

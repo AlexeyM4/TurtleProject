@@ -63,6 +63,7 @@
 
 /* Кнопки */
 .auth-button {
+    width: 100%; /* Занимают всю ширину контейнера */
     background-color: #ff6f61;
     color: white;
     border: none;
@@ -77,19 +78,32 @@
     background-color: #ff4a3d;
 }
 
+/* Контейнер для кнопок */
+.auth-buttons, .auth-groups {
+    display: flex;
+    flex-direction: column; /* Кнопки друг под другом */
+    gap: 1rem; /* Расстояние между кнопками */
+    width: 100%; /* Занимают всю ширину */
 
-/* Ссылка "Забыли пароль" */
-.forgot-password {
-    margin-top: 1rem;
 }
 
-.forgot-password a {
-    color: #ff6f61;
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
+* {
+    box-sizing: border-box;
 }
 
-.forgot-password a:hover {
+/* Сообщения об ошибках */
+.error-message {
     color: #ff4a3d;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    text-align: left;
 }
+
+/* Неактивная кнопка */
+.auth-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+

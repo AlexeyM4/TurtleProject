@@ -1,0 +1,91 @@
+.lessons-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.lessons-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Выравнивание по центру */
+    gap: 1.5rem;
+    margin-top: 2rem;
+    max-width: 1000px; /* Увеличили ширину контейнера */
+    margin-left: auto;
+    margin-right: auto; /* Центрирование контейнера */
+    margin-bottom: 3rem;
+}
+
+.lesson-card {
+    background-color: white;
+    padding: 2rem; /* Увеличили внутренние отступы */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%; /* Ширина карточки урока */
+}
+.lesson-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #ff6f61;
+}
+
+.lesson-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #ff6f61;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.lesson-link:hover {
+    background-color: #ff4a3d;
+}
+
+/* Добавим новые стили */
+.progress-info {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Стили для пройденных уроков */
+.lesson-card.completed {
+    position: relative;
+    border-left: 4px solid #4CAF50;
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+    transition: all 0.3s ease;
+}
+
+.lesson-card.completed:hover {
+    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.3);
+    transform: translateY(-2px);
+}
+
+.lesson-card.completed .lesson-title {
+    color: #2E7D32;
+}
+
+.lesson-card.completed .lesson-link {
+    background-color: #4CAF50;
+}
+
+.lesson-card.completed .lesson-link:hover {
+    background-color: #3e8e41;
+}
+
+/* Анимация свечения для пройденных уроков */
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.7); }
+    100% { box-shadow: 0 0 5px rgba(76, 175, 80, 0.5); }
+}
+
+.lesson-card.completed {
+    animation: glow 3s infinite;
+}

@@ -1,0 +1,25 @@
+{% extends 'main/nav_bar.html' %}
+{% load static %}
+
+{% block params %}
+    <title>Уроки | Kturtle</title>
+    <link href="{% static 'main/css/lessons.css' %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="lessons-container">
+        <h1 class="lessons-title">Уроки</h1>
+
+        <div class="lessons-grid">
+            {% for lesson in lessons_list %}
+                <div class="lesson-card {% if user.is_authenticated and lesson.is_completed %}completed{% endif %}">
+                    <h2 class="lesson-title">Урок {{ lesson.order }}: {{ lesson.title }}</h2>
+                    <p class="lesson-description">{{ lesson.description }}</p>
+                    <a href="{% url 'lesson_detail' lesson.order %}" class="lesson-link">
+                        {% if user.is_authenticated and lesson.is_completed %}✓ {% endif %}Перейти к уроку
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
