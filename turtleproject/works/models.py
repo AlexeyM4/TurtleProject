@@ -32,7 +32,6 @@ class Works(models.Model):
             if os.path.exists(image_path):
                 os.remove(image_path)
 
-        # Вызываем оригинальный метод delete()
         super().delete(*args, **kwargs)
 
 

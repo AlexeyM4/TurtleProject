@@ -1,6 +1,4 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-
+from django.shortcuts import render
 from .models import News, Lessons, LessonProgress
 from works.models import Works
 
@@ -31,7 +29,8 @@ def lessons(request):
         for lesson in lessons_list:
             lesson.is_completed = lesson.id in completed_lessons
 
-    return render(request, 'main/lessons.html', {
+    data = {
         'lessons_list': lessons_list,
-        'auth_required_modal': True  # Флаг для включения модального окна
-    })
+        'auth_required_modal': True
+    }
+    return render(request, 'main/lessons.html', data)

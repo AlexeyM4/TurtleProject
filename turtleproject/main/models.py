@@ -3,8 +3,10 @@ from django.contrib.auth.models import User
 
 class News(models.Model):
     title = models.CharField('Заголовок', max_length=150)
+    preface = models.CharField('Предисловие', max_length=300, blank=True, help_text='Краткое описание новости (до 300 символов)')
     text = models.TextField('Текст новости')
-    date = models.DateField('Дата публикации')
+    image = models.ImageField('Изображение', upload_to='news/', blank=True, null=True)
+    date = models.DateField('Дата публикации', auto_now_add=True)
 
     def __str__(self):
         return self.title
@@ -12,6 +14,7 @@ class News(models.Model):
     class Meta:
         verbose_name = 'Новость'
         verbose_name_plural = 'Новости'
+        ordering = ['-date']
 
 
 class Lessons(models.Model):

@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'main/css/nav_bar.css' %}" rel="stylesheet" type="text/css"/>
-    {% block params %}
-    {% endblock %}
-</head>
-<body>
-    <nav class="navbar">
-        <ul class="nav-list">
-            <li class="nav-item">
-                <a href="{% url 'main' %}"
-                   class="nav-link {% if request.path == '/' %}active{% endif %}">Главная</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'works' %}"
-                   class="nav-link {% if request.path == '/works/' %}active{% endif %}">Работы</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'lessons' %}"
-                   class="nav-link {% if request.path == '/lessons' %}active{% endif %}">Уроки</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'playground' %}"
-                   class="nav-link {% if request.path == '/turtleapp/playground' %}active{% endif %}">Песочница</a>
-            </li>
-            <li class="nav-item">
-                {% if request.user.is_authenticated %}
-                    <a href="{% url 'profile' %}"
-                       class="nav-link {% if request.path == '/users/profile' %}active{% endif %}">Профиль</a>
-                {% else %}
-                    <a href="{% url 'entrance' %}"
-                       class="nav-link {% if request.path == '/users/entrance' %}active{% endif %}">Профиль</a>
-                {% endif %}
-            </li>
-        </ul>
-    </nav>
-    {% block content %}
-    {% endblock %}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'main/css/nav_bar.css' %}" rel="stylesheet" type="text/css"/>
+        {% block params %}
+        {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{% url 'main' %}"
+                       class="nav-link {% if request.path == '/' %}active{% endif %}">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'works' %}"
+                       class="nav-link {% if request.path == '/works/' %}active{% endif %}">Работы</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'lessons' %}"
+                       class="nav-link {% if request.path == '/lessons' %}active{% endif %}">Уроки</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'playground' %}"
+                       class="nav-link {% if request.path == '/turtleapp/playground' %}active{% endif %}">Песочница</a>
+                </li>
+                <li class="nav-item">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'profile' %}"
+                           class="nav-link {% if request.path == '/users/profile' %}active{% endif %}">Профиль</a>
+                    {% else %}
+                        <a href="{% url 'entrance' %}"
+                           class="nav-link {% if request.path == '/users/entrance' %}active{% endif %}">Профиль</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+        {% block content %}
+        {% endblock %}
+    </body>
 </html>

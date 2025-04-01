@@ -6,6 +6,7 @@
     <link href="{% static 'main/css/main.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'users/css/login_or_registration.css' %}" rel="stylesheet" type="text/css"/>
     <script src="{% static 'works/js/likes.js' %}"></script>
+    <script src="{% static 'main/js/news.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,10 +21,20 @@
             <h2>Новости</h2>
             <div class="news-list">
                 {% for new in news %}
-                    <div class="news-item">
-                        <h3>{{ new.title }}</h3>
-                        <p>{{ new.text }}</p>
-                        <span class="news-date">{{ new.date }}</span>
+                    <div class="news-item" data-news-id="{{ new.id }}">
+                        <div class="news-header">
+                            <h3>{{ new.title }}</h3>
+                            <span class="news-date">{{ new.date }}</span>
+                            <span class="news-arrow">▼</span>
+                        </div>
+                        <p class="news-preface">{{ new.preface }}</p>
+
+                        <div class="news-full-content">
+                            {% if new.image %}
+                                <img src="{{ new.image.url }}" alt="{{ new.title }}" class="news-image">
+                            {% endif %}
+                            <div class="news-text">{{ new.text|linebreaks }}</div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
