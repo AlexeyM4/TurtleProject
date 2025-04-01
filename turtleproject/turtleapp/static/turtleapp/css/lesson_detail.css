@@ -210,7 +210,7 @@
 /* Стили для навигации между уроками */
 .lesson-navigation {
     display: flex;
-    justify-content: space-between; /* Распределяем кнопки по краям */
+    justify-content: space-between;
     margin-top: 2rem;
     padding: 0 1rem;
 }

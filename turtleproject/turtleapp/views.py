@@ -1,14 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from main.models import Lessons, LessonProgress
-
 from django.http import JsonResponse
-
 from django.utils import timezone
-
-
-
 from django.views.decorators.csrf import csrf_exempt
-
+from main.models import Lessons, LessonProgress
 
 @csrf_exempt
 def lesson_detail(request, lesson_order):
@@ -39,12 +33,13 @@ def lesson_detail(request, lesson_order):
             completed=True
         ).exists()
 
-    return render(request, 'turtleapp/lesson_detail.html', {
+    data = {
         'lesson': lesson,
         'previous_lesson': previous_lesson,
         'next_lesson': next_lesson,
         'is_completed': is_completed,
-    })
+    }
+    return render(request, 'turtleapp/lesson_detail.html', data)
 
 
 def playground(request):

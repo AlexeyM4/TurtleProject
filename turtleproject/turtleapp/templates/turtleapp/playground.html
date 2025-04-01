@@ -15,15 +15,13 @@
 
         <!-- Контейнер для редактора кода и результата -->
         <div class="sandbox-content">
-            <!-- Поле для ввода кода -->
             <div class="code-editor">
-                <div class="line-numbers-container"> <!-- Добавляем контейнер для прокрутки -->
+                <div class="line-numbers-container">
                     <div class="line-numbers" id="line-numbers"></div>
                 </div>
                 <textarea id="code-input" placeholder="Введите ваш код..." spellcheck="false"></textarea>
             </div>
 
-            <!-- Поле для отображения результата -->
             <div class="output">
                 <canvas id="turtle-canvas" width="700" height="500"></canvas>
                 <div id="error-message" class="error-message"></div>
@@ -37,6 +35,7 @@
             <button id="save-button" class="control-button">Сохранить</button>
         </div>
     </div>
+
     <!-- Модальное окно -->
     <div id="save-modal" class="modal">
         <div class="modal-content">
@@ -45,11 +44,12 @@
                 <p>Зарегистрированные пользователи могут сохранять работы в своём профиле.</p>
                 <a href="{% url 'entrance' %}" class="control-button">Войти</a>
                 <a href="{% url 'registration' %}" class="control-button">Зарегистрироваться</a>
-                <!-- Разделитель -->
+
                 <div class="divider">ИЛИ</div>
-                <!-- Кнопка скачивания -->
+
                 <button id="download-button" class="control-button">Скачать изображение</button>
             </div>
+
             <div id="save-form" class="save-form">
                 <label for="work-title">Название работы:</label>
                 <input type="text" id="work-title" name="work-title" placeholder="Введите название" required>

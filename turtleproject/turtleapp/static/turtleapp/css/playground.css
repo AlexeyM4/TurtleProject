@@ -51,7 +51,7 @@
     line-height: 1.5;
     color: #555;
     user-select: none;
-    min-height: 100%; /* Гарантирует, что контейнер растягивается */
+    min-height: 100%;
 }
 
 .code-editor textarea {
@@ -131,12 +131,12 @@
     }
 
     .code-editor {
-        height: 300px; /* Фиксированная высота для мобильных устройств */
+        height: 300px;
     }
 
     #turtle-canvas {
         width: 100%;
-        height: 300px; /* Уменьшаем высоту холста */
+        height: 300px;
     }
 }
 
@@ -147,11 +147,11 @@
     }
 
     .code-editor {
-        height: 250px; /* Уменьшаем высоту редактора кода */
+        height: 250px;
     }
 
     #turtle-canvas {
-        height: 250px; /* Уменьшаем высоту холста */
+        height: 250px;
     }
 
     .control-button {
@@ -167,11 +167,11 @@
     }
 
     .code-editor {
-        height: 200px; /* Уменьшаем высоту редактора кода */
+        height: 200px;
     }
 
     #turtle-canvas {
-        height: 200px; /* Уменьшаем высоту холста */
+        height: 200px;
     }
 
     .control-button {
@@ -179,7 +179,6 @@
         font-size: 0.8rem;
     }
 }
-
 
 /* Стили для модального окна */
 .modal {
@@ -259,8 +258,8 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-decoration: none; /* Убираем подчёркивание */
-    display: inline-block; /* Чтобы кнопка была инлайновым блоком */
+    text-decoration: none;
+    display: inline-block;
 }
 
 .control-button:hover {

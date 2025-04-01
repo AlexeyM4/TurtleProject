@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (checkButton) {
         checkButton.addEventListener('click', function() {
-            // Здесь должна быть ваша логика проверки решения
-            const isSolutionCorrect = checkSolution(); // Ваша функция проверки
+            const isSolutionCorrect = checkSolution();
 
             if (isSolutionCorrect) {
                 fetch(window.location.href, {
@@ -19,13 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     if (data.status === 'success') {
-                        // Успешно отметили как пройденный
+
                         checkButton.classList.add('completed');
                         checkButton.textContent = '✓ Урок пройден';
                         checkButton.style.backgroundColor = '#4CAF50';
                         checkButton.disabled = true;
                     } else if (data.status === 'auth_required') {
-                        // Показываем модальное окно авторизации
+
                         authModal.style.display = 'block';
                     }
                 })
@@ -62,10 +61,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return cookieValue;
     }
 
-    // Заглушка для функции проверки решения
+
     function checkSolution() {
-        // Здесь должна быть ваша реальная логика проверки
-        // Возвращает true если решение верное
         return true; // временно всегда возвращает true для теста
     }
 });
