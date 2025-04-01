@@ -161,7 +161,6 @@ def delete_comment(request, work_id, comment_id):
     if comment.author != request.user:
         return JsonResponse({'success': False, 'error': 'Недостаточно прав'}, status=403)
 
-    # Удаляем только комментарий
     comment.delete()
 
     return JsonResponse({
